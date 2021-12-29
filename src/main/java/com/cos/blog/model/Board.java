@@ -1,15 +1,18 @@
 package com.cos.blog.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,12 +24,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity
 @Data
+@Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Board {
+public  class Board {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +44,12 @@ public class Board {
     @ColumnDefault("0")
     private int count; // 조회수
 
-    @ManyToOne // 연관관계 board = many, user = one
+    @ManyToOne(fetch = FetchType.EAGER) // 연관관계 board = many, user = one / fetchType: eager is default value
     @JoinColumn(name = "userId")
     private User user; // FK / DB는 오브젝트를 저장할 수 없다. 하지만 java는 오브젝트를 저장할수있다.
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // 연관관계의 주인이 아니다 (FK가 아님) / DB에 column 생성 X
+    private List<Reply> reply;                             // 댓글 펼치기를 누르면 댓글이 나오게하기때문에 lazy전략을 사용
 
     @CreationTimestamp
     private Timestamp createDate;

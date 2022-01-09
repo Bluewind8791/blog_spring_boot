@@ -1,6 +1,9 @@
 package com.cos.blog.handler;
 
+import com.cos.blog.dto.ResponseDto;
+
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class GlobalExceptionHandler {
     
     @ExceptionHandler(value = Exception.class)
-    public String globalExceptionHandler(Exception e) {
-        return "<h1>"+e.getMessage()+"</h1>";
+    public ResponseDto<String> globalExceptionHandler(Exception e) {
+        return new ResponseDto<String>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
@@ -23,8 +26,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = EmptyResultDataAccessException.class)
     public String emptyResultDataAccessExceptionHandler(EmptyResultDataAccessException e) {
         String msg = "존재하지 않는 사용자입니다.\n"+"<h1>"+e.getMessage()+"</h1>";
-
-        
         return msg;
     }
 }

@@ -19,8 +19,12 @@ repositories {
 }
 
 dependencies {
-	// implementation 'org.springframework.security:spring-security-taglibs' // 시큐리티 태그 라이브러리
-	// implementation 'org.springframework.boot:spring-boot-starter-security'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs
+	implementation 'org.springframework.security:spring-security-taglibs:5.2.2.RELEASE'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.5'
+
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' // JSP template engine 9.0.22v?
 	implementation 'javax.servlet:jstl' // JSTL 1.2v?
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -30,7 +34,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	// testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {

@@ -3,6 +3,9 @@ package com.cos.blog.controller;
 import com.cos.blog.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +18,8 @@ public class BoardController {
 
     // 메인페이지로 갈때 데이터를 들고 간다
     @GetMapping({"","/"})
-    public String index(Model model) {
-        model.addAttribute("boards", boardService.boardList());
+    public String index(Model model, @PageableDefault(size = 3, sort = "id", direction = Direction.DESC) Pageable pageable) {
+        model.addAttribute("boards", boardService.boardList(pageable));
         return "index"; // view Resolver 작동, model의 정보를 들고 이동
     }
 

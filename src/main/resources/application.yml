@@ -33,3 +33,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+kakao:
+  key: ben1234 # kakao login password 통일

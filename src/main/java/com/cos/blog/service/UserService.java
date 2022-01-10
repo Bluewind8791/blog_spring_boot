@@ -35,11 +35,24 @@ public class UserService {
         User persistance = userRepository.findById(user.getId()).orElseThrow(() -> {
             return new IllegalArgumentException("회원 찾기 실패");
         });
-        String rawPassword = user.getPassword();
-        String encPassword = encoder.encode(rawPassword);
-        persistance.setPassword(encPassword);
-        persistance.setEmail(user.getEmail());
+
+        // Validate check
+        if (persistance.getOauth() == null || persistance.getOauth().equals("")) {
+            String rawPassword = user.getPassword();
+            String encPassword = encoder.encode(rawPassword);
+            persistance.setPassword(encPassword);
+            persistance.setEmail(user.getEmail());
+        }
+
         // 회원수정 함수 종료 = 서비스 종료 = 트랜잭션 종료 -> update 문 commit 실행
+    }
+
+    @Transactional(readOnly = true)
+    public User findUser(String username) {
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            return new User();
+        });
+        return user;
     }
 
 }

@@ -33,10 +33,10 @@
                 <c:when test="${empty principal}">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/auth/login_form">Login</a>
+                            <a class="nav-link" href="/auth/login_form">Log in</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/auth/join_form">Sign Up</a>
+                            <a class="nav-link" href="/auth/join_form">Sign up</a>
                         </li>
                     </ul>
                 </c:when>

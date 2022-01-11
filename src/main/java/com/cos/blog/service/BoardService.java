@@ -2,11 +2,9 @@ package com.cos.blog.service;
 
 import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
-import com.cos.blog.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,9 +20,6 @@ public class BoardService {
 
     @Autowired
     private ReplyRepository replyRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Transactional
     public void write(Board board, User user) {
@@ -66,21 +61,7 @@ public class BoardService {
 
     @Transactional
     public void comment(ReplySaveRequestDto replySaveRequestDto) {
-
-        User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(() -> {
-            return new IllegalArgumentException("Comment Fail: Can not found User Id.");
-        });
-        Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(() -> {
-            return new IllegalArgumentException("Comment Fail: Can not found Board Id.");
-        });
-
-        Reply reply = Reply.builder()
-            .user(user)
-            .board(board)
-            .content(replySaveRequestDto.getContent())
-            .build();
-
-        replyRepository.save(reply);
+        replyRepository.saveComment(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
     }
 
 }// end of class

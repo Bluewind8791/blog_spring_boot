@@ -52,8 +52,8 @@
                     <div>${reply.content}</div>
                     <div class="d-flex">
                         <div class="font-italic"> - ${reply.user.username} &nbsp;</div>
-
-                        <c:if test="${userId == principal.user.id}">
+                        <!-- delete comment button -->
+                        <c:if test="${reply.user.id == principal.user.id}">
                             <button class="badge" onclick="index.deleteComment(${board.id}, ${reply.id})">Delete</button>
                         </c:if>
 

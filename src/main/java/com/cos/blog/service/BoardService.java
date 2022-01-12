@@ -64,4 +64,9 @@ public class BoardService {
         replyRepository.saveComment(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
     }
 
+    @Transactional
+    public void deleteReply(Long replyId) {
+        replyRepository.deleteById(replyId);
+    }
+
 }// end of class

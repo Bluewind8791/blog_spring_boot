@@ -86,6 +86,19 @@ let index={
         }).fail(function(error){
             alert(JSON.stringify(error));
         });
+    },
+
+    replyDelete: function(boardId, replyId) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`,
+            dataType: "json"
+        }).done(function(resp){
+            alert("Comment deleted");
+            location.href = `/board/${boardId}`;
+        }).fail(function(error){
+            alert(JSON.stringify(error));
+        });
     }
 }
 

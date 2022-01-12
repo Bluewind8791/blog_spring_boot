@@ -3,6 +3,7 @@ package com.cos.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,7 +50,8 @@ public  class Board {
     @JoinColumn(name = "userId")
     private User user; // FK / DB는 오브젝트를 저장할 수 없다. 하지만 java는 오브젝트를 저장할수있다.
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // 연관관계의 주인이 아니다 (FK가 아님) / DB에 column 생성 X / 댓글 펼치기를 누르면 댓글이 나오게하기때문에 lazy전략을 사용
+    // 연관관계의 주인이 아니다 (FK가 아님) / DB에 column 생성 X / 댓글 펼치기를 누르면 댓글이 나오게하기때문에 lazy전략을 사용
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"board"}) // 무한참조 방지
     @OrderBy("id desc") // ordering
     private List<Reply> replys;

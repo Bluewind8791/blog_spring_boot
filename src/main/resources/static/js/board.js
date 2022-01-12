@@ -10,7 +10,7 @@ let index={
             this.update()
         );
         $("#btn-reply-save").on("click", () =>
-            this.replySave()
+            this.saveComment()
         );
     },
 
@@ -67,13 +67,12 @@ let index={
         });
     },
 
-    replySave: function() {
+    saveComment: function() {
         let data = {
             userId: $("#userId").val(),
             boardId: $("#boardId").val(),
             content: $("#reply-content").val()
         };
-        console.log(data);
         $.ajax({
             type: "POST",
             url: `/api/board/${data.boardId}/reply`,
@@ -88,7 +87,7 @@ let index={
         });
     },
 
-    replyDelete: function(boardId, replyId) {
+    deleteComment: function(boardId, replyId) {
         $.ajax({
             type: "DELETE",
             url: `/api/board/${boardId}/reply/${replyId}`,

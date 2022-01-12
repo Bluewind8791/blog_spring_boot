@@ -1,19 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@ include file="../layout/header.jsp"%>
+<%@page import="java.util.*" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<c:set var="board_update_date" value="${board.updateDate}"/>
 
 <div class="container">
     <button class="btn btn-secondary" onclick="history.back()">Back</button>
+
     <c:if test="${board.user.id == principal.user.id}">
         <a href="/board/${board.id}/update_form" class="btn btn-warning">Edit</a>
-    </c:if>
-    <c:if test="${board.user.id == principal.user.id}">
         <button id="btn-delete" class="btn btn-danger">Delete</button>
     </c:if>
     <br /><br />
     <div>
-        number: <span id="id">${board.id} </span>
+        <!-- number: <span id="id">${board.id} </span> -->
         writer: <span><i>${board.user.username}</i></span>
+        date: <fmt:formatDate value="${board_update_date}" type="date" pattern="yyyy-MM-dd"/>
     </div>
     <br />
     <div>
@@ -48,7 +52,11 @@
                     <div>${reply.content}</div>
                     <div class="d-flex">
                         <div class="font-italic"> - ${reply.user.username} &nbsp;</div>
-                        <button class="badge" onclick="index.replyDelete(${board.id}, ${reply.id})">Delete</button>
+
+                        <c:if test="${userId == principal.user.id}">
+                            <button class="badge" onclick="index.deleteComment(${board.id}, ${reply.id})">Delete</button>
+                        </c:if>
+
                     </div>
                 </li>
             </c:forEach>

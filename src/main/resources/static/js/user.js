@@ -21,9 +21,12 @@ let index={
             contentType: "application/json; charset=utf-8", // body data type
             dataType: "json" // response type / 기본은 String으로 오나 생긴게 json이라면 js type로 변환
         }).done(function(resp){
-            alert("Sign Up complete!");
-            location.href = "/";
-            console.log(resp); // 1 return
+            if (resp.status === 500) {
+                alert("Sign up failed.");
+            } else {
+                alert("Sign up success.");
+                location.href = "/";
+            }
         }).fail(function(error){
             alert(JSON.stringify(error));
         }); // ajax 통신을 통하여 3개의 데이터를 json으로 변경하여 insert 요청

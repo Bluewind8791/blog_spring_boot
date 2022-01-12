@@ -30,10 +30,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // numbering 전략 : 프로젝트에서 연결된 DB의 넘버링 전략을 따른다.
     private Long id; // sequence, auto_increment
 
-    @Column(nullable = false, length = 50) // not null and 50 이하
+    @Column(nullable = false, length = 20, unique = true) // not null and 50 이하
     private String username;
 
-    @Column(length = 100) // password는 hash화 하여 암호화해야하기때문에 넉넉하게
+    @Column(nullable = false, length = 100) // password는 hash화 하여 암호화해야하기때문에 넉넉하게
     private String password;
     
     @Column(nullable = false, length = 50)
